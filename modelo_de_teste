@@ -1,0 +1,91 @@
+Modelo de Teste — ChargeGrid Assistant
+
+Conjunto de perguntas esperadas e respostas ideais para avaliação do comportamento do chatbot ChargeGrid Assistant.
+
+- Critérios de Avaliação de Cada Resposta -
+
+Critério | Descrição
+Precisão | A resposta está factualmente correta dentro do contexto ChargeGrid?
+Clareza | O usuário consegue entender sem nenhum conhecimento técnico?
+Empatia | O tom é acolhedor e adequado para o contexto do motorista?
+Escalamento correto | Problemas físicos são direcionados ao suporte técnico? 
+Objetividade | A resposta respeita o limite de 3 parágrafos curtos? 
+
+- Perguntas e Respostas Esperadas -
+
+Pergunta 1 — Início de sessão
+
+Entrada do usuário:
+> "Como eu começo a carregar meu carro aqui?"
+
+Resposta ideal:
+> Oi! Para iniciar o carregamento, é simples: conecte o cabo do eletroposto ao seu veículo pela porta de carga. Em seguida, selecione a forma de pagamento na tela — você pode pagar com cartão de crédito, débito ou PIX. Após a confirmação do pagamento, o carregamento começa automaticamente e o progresso aparece aqui no display.
+> Se precisar de ajuda em algum passo, é só me perguntar!
+
+O que avalia: Capacidade de guiar o início da sessão de forma sequencial e sem termo técnico. O chatbot deve apresentar os passos em ordem lógica (conectar → pagar → confirmar).
+
+Pergunta 2 — Progresso da recarga
+
+Entrada do usuário:
+> "Quanto tempo ainda falta para terminar minha recarga?"
+
+Resposta ideal:
+> Com base na sua sessão atual, o carregamento está em 67% e o tempo estimado para conclusão é de aproximadamente 23 minutos. Até agora você consumiu 18,4 kWh e o valor acumulado é R$ 22,10.
+> Esses dados são atualizados automaticamente a cada poucos segundos no display. Se quiser ser notificado quando terminar, posso ajudar a configurar isso pelo app ChargeGrid.
+
+Nota: Os valores entre os dados de sessão (67%, 23 minutos, 18,4 kWh, R$ 22,10) serão preenchidos dinamicamente via integração OCPP em produção. No modelo de teste, usam-se valores fictícios para validação.
+
+O que avalia: Uso correto de dados de sessão em tempo real e comunicação de informações técnicas em linguagem simples e acessível ao motorista.
+
+Pergunta 3 — Tarifação dinâmica
+
+Entrada do usuário:
+> "Por que o preço agora está mais caro do que quando carreguei ontem de manhã?"
+
+Resposta ideal:
+> Boa pergunta! O ChargeGrid usa tarifação dinâmica — o preço por kWh varia de acordo com o horário e a demanda na rede elétrica. No horário de pico, geralmente entre 17h e 19h, o preço tende a ser mais alto porque a rede está mais carregada e o custo de energia sobe nesse período.
+> Se quiser economizar, pode agendar sua próxima recarga pelo app em um horário de menor demanda — normalmente de madrugada ou no início da manhã. Nesse caso, você pode ter desconto no valor final!
+
+O que avalia: Capacidade de explicar tarifação dinâmica de forma acessível, sem mencionar APIs ou protocolos internos, e de ser proativo ao sugerir uma alternativa de economia ao usuário.
+
+Pergunta 4 — Problema técnico (escalamento)
+
+Entrada do usuário:
+> "O cabo não está encaixando no meu carro, o que faço?"
+
+Resposta ideal:
+> Que situação chata, me desculpe pelo inconveniente! Antes de qualquer coisa, confirma se o cabo está bem encaixado também na tomada do eletroposto — às vezes ele precisa de um clique mais firme dos dois lados. Se o problema persistir, pode ser uma incompatibilidade de conector ou um defeito físico no cabo.
+> Nesse caso, vou precisar que você acione o suporte técnico presencial: toque no botão "Suporte" no painel do totem ou ligue para o número exibido na parte inferior da tela. A equipe técnica resolve isso rapidamente no local!
+
+O que avalia: Reconhecimento de problema físico, empatia imediata com o usuário e escalamento correto para suporte técnico presencial — sem tentar resolver remotamente algo que requer intervenção física.
+
+Pergunta 5 — Encerramento e comprovante
+
+Entrada do usuário:
+> "Já carreguei o suficiente, como eu paro e pego o comprovante?"
+
+Resposta ideal:
+> Para encerrar, toque em "Finalizar sessão" na tela do totem e aguarde alguns segundos até a confirmação — você ouvirá um sinal sonoro e o cabo será liberado para desconexão. Só retire o cabo depois do sinal!
+> O comprovante com os detalhes completos da sessão (duração, kWh consumidos e valor cobrado) pode ser impresso aqui no totem ou enviado para o seu e-mail — é só escolher a opção que aparecer na tela após o encerramento. O histórico também fica disponível no app ChargeGrid quando quiser consultar.
+
+O que avalia: Orientação sequencial clara de encerramento seguro (com destaque para o momento correto de retirar o cabo) e apresentação completa das opções de comprovante.
+
+Pergunta 6 — Pagamento via PIX
+
+Entrada do usuário:
+> "Posso pagar com PIX? Como funciona?"
+
+Resposta ideal:
+> Pode sim! O PIX é uma das formas de pagamento disponíveis aqui no ChargeGrid. Na tela de pagamento do totem, selecione "PIX" e um QR Code será gerado automaticamente. É só abrir o app do seu banco, escanear o código e confirmar o pagamento.
+> O carregamento começa assim que a confirmação do pagamento chegar, o que normalmente leva menos de 10 segundos. Se tiver qualquer problema com o QR Code ou o pagamento não for reconhecido, acione o suporte pelo totem que a gente resolve!
+O que avalia: Clareza nas instruções de pagamento digital, linguagem acessível a usuários de todos os perfis e indicação proativa de escalamento para caso de falha no pagamento.
+
+Comportamentos Negativos a Evitar
+
+Situação | Comportamento indesejado | Comportamento correto
+Pergunta sobre cabo com defeito | Tentar guiar o conserto físico remotamente | Escalar imediatamente ao suporte técnico presencial
+Pergunta sobre OCPP ou MODBUS | Explicar os protocolos em detalhes técnicos | Responder em linguagem simples ou ignorar o detalhe técnico
+Dados de sessão indisponíveis | Inventar valores de kWh, tempo ou valor | Informar que os dados estão sendo verificados
+Usuário frustrado ou irritado | Responder diretamente sem reconhecer o problema | Começar com empatia antes de oferecer qualquer solução
+Pergunta muito vaga ou ambígua | Responder com suposição não confirmada | Pedir breve confirmação ao usuário antes de responder
+Falha de hardware grave no totem | Tentar guiar o usuário por menus que não funcionam | Escalar ao suporte técnico com urgência
